@@ -9,6 +9,16 @@ public class AccountRegister {
         accounts.add(newAcc);
     }
 
+    public Account findAccount(String name) {
+        for (int i = 0; i < accounts.size(); i++) {
+            Account a = accounts.get(i);
+            if (a.getName().equalsIgnoreCase(name)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
     public void printAll() {
         for (int i = 0; i < accounts.size(); i++) {
             Account a = accounts.get(i);
