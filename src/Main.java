@@ -1,26 +1,61 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         AccountRegister register = new AccountRegister();
+        Scanner scanner = new Scanner(System.in);
 
-        register.createAccount("Kim", 500);
-        register.createAccount("Moa", 100);
+        int choice = 0;
 
-        Account kim = register.findAccount("Kim");
-        if (kim != null) {
-            System.out.println("Hittade: " + kim.getName() +" | Saldo: " + kim.getBalance());
-            kim.deposit(200);
+        while (choice != 4) {
+            System.out.println("\n--- MENY ---");
+            System.out.println("1. Skapa konto");
+            System.out.println("2. Lista alla konton");
+            System.out.println("3. Sätt in pengar");
+            System.out.println("4. Avsluta");
+            System.out.println("Välj (1-4)");
+
+            choice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (choice == 1) {
+                System.out.println("Ange namn: ");
+                String name = scanner.nextLine();
+
+                System.out.println("Ange startsaldo: ");
+                int balance = scanner.nextInt();
+                scanner.nextLine();
+
+                register.createAccount(name, balance);
+                System.out.println("Konto skapat!");
+
+            } else if (choice == 2) {
+                register.printAll();
+
+            } else if (choice == 3) {
+                System.out.println("Ange namn på kontot: ");
+                String name = scanner.nextLine();
+
+                Account found = register.findAccount(name);
+
+                if (found != null) {
+                    System.out.println("Ange belopp att sätta in: ");
+                    int amount = scanner.nextInt();
+                    scanner.nextLine();
+
+                    found.deposit(amount);
+                    System.out.println("Nytt saldo för " + found.getName() + ": " + found.getBalance());
+                } else {
+                    System.out.println("Konto saknas: " + name);
+                }
+
+            } else if (choice == 4) {
+                System.out.println("Hej då!");
+            } else {
+                System.out.println("Ogiltight val, försök igen");
+            }
         }
-
-        Account anna = register.findAccount("Anna");
-
-        if (anna != null) {
-            anna.deposit(100);
-        } else {
-            System.out.println("Kontot saknas: Anna");
-        }
-
-        register.printAll();
-
+        scanner.close();
     }
 }
 
